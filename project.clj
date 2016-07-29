@@ -10,7 +10,6 @@
                  [org.clojure/data.json "0.2.6"]]
   :plugins [[lein-ring "0.9.7"]]
   :ring {:handler giphy-search.handler/app}
-  :main [giphy-search.handler]
   :profiles
   {:dev {:dependencies [[javax.servlet/servlet-api "2.5"]
                         [ring/ring-mock "0.3.0"]]}})

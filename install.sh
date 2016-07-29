@@ -28,7 +28,7 @@ export LEIN_ROOT="Something"
 lein deps
 
 # compile the web services into a single file.
-lein uberjar
+lein ring uberjar
 
 # clojure needs two packages
 sudo apt-get install nginx supervisor
