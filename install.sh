@@ -45,5 +45,5 @@ cd /var/www/giphy-search
 sudo ln -s giphy-search-0.1.0-SNAPSHOT-standalone.jar giphy-search.jar
 
 # move the conf file into supervisor
-sudo cp ~/giphy-search/giphy-serach.conf /etc/supervisor/conf.d/giphy-search.conf
+sudo cp ~/giphy-search/giphy-search.conf /etc/supervisor/conf.d/giphy-search.conf
 
