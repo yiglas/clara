@@ -12,15 +12,15 @@
 ##
 
 upstream http_backend {
-	server 127.0.0.1:8080;
+	server 127.0.0.1:5000;
 	keepalive 32;
 }
 
 # Default server configuration
 #
 server {
-	listen 80 default_server;
-	listen [::]:80 default_server;
+	listen 8080 default_server;
+	listen [::]:8080 default_server;
 
 	# SSL configuration
 	#

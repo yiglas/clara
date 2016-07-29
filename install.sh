@@ -47,3 +47,5 @@ sudo ln -s giphy-search-0.1.0-SNAPSHOT-standalone.jar giphy-search.jar
 # move the conf file into supervisor
 sudo cp ~/giphy-search/giphy-search.conf /etc/supervisor/conf.d/giphy-search.conf
 
+# finally copy the file to the nginx reverse proxy
+sudo cp ~/giphy-search/nginx-default /etc/nginx/sites-available/default
