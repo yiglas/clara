@@ -22,7 +22,7 @@ sudo chmod a+x /usr/local/bin/lein
 export LEIN_ROOT="Something"
 
 # execute the self-install function of lein.
-/usr/local/bin/lein self-install
+# /usr/local/bin/lein self-install
 
 # make sure to download all the dependencies for the app
 lein deps

@@ -7,7 +7,8 @@
                  [ring/ring-defaults "0.2.1"]
                  [ring/ring-json "0.4.0"]
                  [clj-http "2.2.0"]
-                 [org.clojure/data.json "0.2.6"]]
+                 [org.clojure/data.json "0.2.6"]
+                 ring/ring-jetty-adapter "1.4.0"]]
   :plugins [[lein-ring "0.9.7"]]
   :ring {:handler giphy-search.handler/app}
   :profiles
