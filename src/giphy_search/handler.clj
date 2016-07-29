@@ -72,6 +72,6 @@ terms : string representing the requested search options.
            (wrap-defaults site-defaults)))
 
 (defn -main
-"Pass the handler to Jetty" 
+"Pass the handler to Jetty on port 5000" 
 []
-  (run-jetty app))
+  (run-jetty app {:port 5000}))
