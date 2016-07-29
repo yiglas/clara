@@ -11,6 +11,11 @@
 # Please see /usr/share/doc/nginx-doc/examples/ for more detailed examples.
 ##
 
+upstream http_backend {
+	server 127.0.0.1:8080;
+	keepalive 32;
+}
+
 # Default server configuration
 #
 server {
@@ -40,11 +45,23 @@ server {
 
 	server_name _;
 
+	# location / {
+	# 	# First attempt to serve request as file, then
+	# 	# as directory, then fall back to displaying a 404.
+	# 	try_files $uri $uri/ =404;
+	# }
 	location / {
-		# First attempt to serve request as file, then
-		# as directory, then fall back to displaying a 404.
-		try_files $uri $uri/ =404;
-	}
+        proxy_pass http://http_backend;
+
+        proxy_http_version 1.1;
+        proxy_set_header Connection "";
+
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header Host $http_host;
+
+        access_log /var/www/logs/giphy-search.access.log;
+        error_log /var/www/logs/giphy-search.error.log;
+    }
 
 	# pass the PHP scripts to FastCGI server listening on 127.0.0.1:9000
 	#
