@@ -5,7 +5,8 @@
             [ring.middleware.defaults :refer [wrap-defaults site-defaults]]
             [ring.middleware.json :as middleware-json]
             [clj-http.client :as client]
-            [clojure.data.json :as json]))
+            [clojure.data.json :as json])
+  (:gen-class))
 
 (def giphy-url "http://api.giphy.com/v1/gifs/search")
 (def giphy-beta-key "dc6zaTOxFJmzC")

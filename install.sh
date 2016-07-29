@@ -18,6 +18,9 @@ sudo curl https://raw.githubusercontent.com/technomancy/leiningen/stable/bin/lei
 # set the permissions for the lein script.
 sudo chmod a+x /usr/local/bin/lein
 
+# allow lein to run as root
+export LEIN_ROOT="Something"
+
 # execute the self-install function of lein.
 /usr/local/bin/lein self-install
 
