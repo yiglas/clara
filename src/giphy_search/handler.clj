@@ -5,7 +5,9 @@
             [ring.middleware.defaults :refer [wrap-defaults site-defaults]]
             [ring.middleware.json :as middleware-json]
             [clj-http.client :as client]
-            [clojure.data.json :as json]))
+            [clojure.data.json :as json]
+            [ring.adapter.jetty :refer :all])
+  (:gen-class))
 
 (def giphy-url "http://api.giphy.com/v1/gifs/search")
 (def giphy-beta-key "dc6zaTOxFJmzC")
@@ -68,3 +70,8 @@ terms : string representing the requested search options.
            (middleware-json/wrap-json-body {:keywords? true :bigdecimals? true})
            (middleware-json/wrap-json-response)
            (wrap-defaults site-defaults)))
+
+(defn -main
+"Pass the handler to Jetty" 
+[]
+  (run-jetty app))
