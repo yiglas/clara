@@ -11,6 +11,7 @@
                  [ring/ring-jetty-adapter "1.4.0"]]
   :plugins [[lein-ring "0.9.7"]]
   :ring {:handler giphy-search.handler/app}
+  :aot [giphy-search.handler]
   :main giphy-search.handler
   :profiles {:dev {:dependencies [[javax.servlet/servlet-api "2.5"]
                                   [ring/ring-mock "0.3.0"]]}})
