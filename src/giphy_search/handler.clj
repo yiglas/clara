@@ -37,7 +37,10 @@ Convert the body of the results into a map.
 str: represents the string we want to convert to a map
 "
 [str]
-  (json/read-str str :key-fn keyword))
+  (try
+    (json/read-str str :key-fn keyword)
+    (catch java.io.EOFException e 
+      nil)))
 
 (defn take-only-5
 "
@@ -48,6 +51,13 @@ array: represents an array object.
   (if (> 5 (count array))
     nil
     (take 5 array)))
+
+(defn format-item
+"
+take a map with :id and :url (atleat) and returns a map with :gif_id and :url
+"
+[item]
+  (hash-map :gif_id (:id item) :url (:url item)))
 
 (defn output
 "
@@ -63,7 +73,7 @@ in this format:
 }
 "
 [data]
-  (hash-map :data (mapv #(hash-map :gif_id (:id %) :url (:url %)) data)))
+  (hash-map :data (mapv format-item data)))
 
 (defn get-giphy-search
 "
