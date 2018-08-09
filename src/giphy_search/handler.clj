@@ -12,13 +12,26 @@
 (def giphy-url "http://api.giphy.com/v1/gifs/search")
 (def giphy-beta-key "dc6zaTOxFJmzC")
 
+;create atom state holdes array token - results (5)
+(def token-store (atom []))
+(def current-key (atom 0))
+
+(defn add-to-store 
+"
+terms will be the search terms used
+key will be the next unique id
+offset current off set
+"
+[terms key offset]
+  (swap! token-store (conj @token-store {:terms terms :key key :offset offset})))
+
 (defn get-from-giphy-api 
 "
 Executes the get request to the giphy url.
 terms: represents the search terms being sent to giphy.
 "
-[terms]
-  (client/get giphy-url {:query-params {"q" terms "api_key" giphy-beta-key}}))
+[terms offset]
+  (client/get giphy-url {:query-params {"q" terms "api_key" giphy-beta-key "limit" 5 "offset" offset}}))
 
 (defn pull-keyword
 "
@@ -50,7 +63,7 @@ array: represents an array object.
 [array]
   (if (> 5 (count array))
     nil
-    (take 5 array)))
+    array))
 
 (defn format-item
 "
@@ -73,24 +86,35 @@ in this format:
 }
 "
 [data]
-  (hash-map :data (mapv format-item data)))
+  (hash-map :data (mapv format-item data)) :next key))
+
+(defn generate-key
+"create a unique key"
+[]
+  (swap! current-key inc))
+
 
 (defn get-giphy-search
 "
 Pull it all together.
 terms: represents the search terms being sent to giphy.
 "
-[terms]
-  (->> (get-from-giphy-api terms)
-       (pull-keyword :body)
-       (convert-to-map)
-       (pull-keyword :data)
-       (take-only-5)
-       (output)))
+[terms key]
+  (let [offset (---- terms key)
+        newkey (generate-key)
+        url (add-to-store terms newkey offset)]
+    (->> (get-from-giphy-api terms offset)
+        (pull-keyword :body)
+        (convert-to-map)
+        (pull-keyword :data)
+        (take-only-5)
+        (output url newkey))))
 
 (defroutes app-routes
   (GET "/search/:terms" [terms] (response (get-giphy-search terms)))
+  (GET "/search/:terms/:key" [terms key] (response (get-giphy-search terms key)))
   (route/not-found "Not Found"))
+
 
 (def app 
   (->
